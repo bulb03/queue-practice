@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct queue{
+	int a[80];
+	int front;
+	int rear;
+}z;
+int enqueue(int [],int,int);
+int dequeue(int [],int,int);
+int main(void){
+	z queue1;
+	int i,j,num,ans;
+	num = 0;
+	queue1.front = 0;
+	queue1.rear = 0;
+	do{
+		printf("Please choose a function you want to do 1)enqueue 2)dequeue 3)print:");
+		scanf("%d",&i);
+		switch(i){
+			case 1:
+				printf("Please enter a integer you want to enqueue:");
+				scanf("%d",&ans);
+				queue1.rear = enqueue(queue1.a,queue1.rear,ans);
+				num++;
+			break;
+			case 2:
+				if(num==0){
+					printf("Please enter a integer to the array!");
+				}
+				else{
+					queue1.front = dequeue(queue1.a,queue1.front,num);
+					num--;
+				}
+			break;
+			case 3:
+				for(j=queue1.front;j<num;j++){
+					printf("%d\t",queue1.a[j]);
+				}
+				printf("\n");
+			break;
+			default:
+				printf("Please enter the choice again!\n");
+			break;
+		}
+	}while(num<80);
+}
+
+int enqueue(int a[],int rear,int ans){
+	a[rear] = ans;
+	rear++;
+	return rear;
+}
+
+int dequeue(int a[],int front,int num){
+	printf("%d is removed from the array\n",a[front]);
+	a[front] = 0;
+	//if(front==0){       //如果一開始只有輸入一個值，那刪掉的話，front又+1，會出問題 ，但是，這樣寫的問題是，有一個以上的值輸入時，也會把0印出來，因為我在print那是以front的質作為起始值 
+	if(num==1){
+		return front;
+	}
+	else{
+		front++;
+		return front;
+	}
+}
