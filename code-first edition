@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct queue{
+	int a[80];
+	int front;
+	int rear;
+}z;
+int enqueue(int [],int,int);
+int dequeue(int [],int);
+int main(void){
+	z queue1;
+	int i,j,num,ans;
+	num = 0;
+	queue1.front = 0;
+	queue1.rear = 0;
+	do{
+		printf("Please choose a function you want to do 1)enqueue 2)dequeue 3)print:");
+		scanf("%d",&i);
+		switch(i){
+			case 1:
+				printf("Please enter a integer you want to enqueue:");
+				scanf("%d",&ans);
+				queue1.rear = enqueue(queue1.a,queue1.rear,ans);
+				num++;
+			break;
+			case 2:
+				queue1.front = dequeue(queue1.a,queue1.front);
+				num--;
+			break;
+			case 3:
+				for(j=queue1.front;j<num;j++){
+					printf("%d\t",queue1.a[j]);
+				}
+			break;
+			default:
+				printf("Please enter the choice again!\n");
+			break;
+		}
+	}while(num<80);
+}
+
+int enqueue(int a[],int rear,int ans){
+	a[rear] = ans;
+	rear++;
+	return rear;
+}
+
+int dequeue(int a[],int front){
+	printf("%d is removed from the array",a[front]);
+	a[front] = 0;
+	front++;
+	return front;
+}
