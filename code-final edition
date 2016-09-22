@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct queue{
+	int a[80];
+	int front;
+	int rear;
+}z;
+int enqueue(int [],int,int,int);
+int dequeue(int [],int,int);
+int main(void){
+	z queue1;
+	int i,j,num,ans;
+	num = 0;
+	queue1.front = 0;
+	queue1.rear = 0;
+	do{
+		printf("Please choose a function you want to do 1)enqueue 2)dequeue 3)print:");
+		scanf("%d",&i);
+		switch(i){
+			case 1:
+				printf("Please enter a integer you want to enqueue:");
+				scanf("%d",&ans);
+				queue1.rear = enqueue(queue1.a,queue1.rear,ans,num);         //num的值也輸入進去，可以讓程式判斷現在總數為何，進而來對front和rear作相對應的處理 
+				num++;
+			break;
+			case 2:
+				if(num<=0){
+					printf("Please enter a integer to the array!\n");
+				}
+				else{
+					queue1.front = dequeue(queue1.a,queue1.front,num);
+					num--;
+				}
+			break;
+			case 3:
+				if(num==0){
+					printf("This array is empty.Please enter some integer!\n");
+				}
+				else{
+					for(j=queue1.front;j<queue1.rear;j++){     //bug fix! 用num會讓最後一個無法印出，那我當時為何不用rear就好? 
+						printf("%d\t",queue1.a[j]);
+					}
+					printf("\n");
+				}
+			break;
+			default:
+				printf("Please enter the choice again!\n");
+			break;
+		}
+	}while(num<80);
+}
+
+int enqueue(int a[],int rear,int ans,int num){
+	if(num==0){            //bug fix! 防止num變0時，rear還留在原本的位置 
+		rear = 0;
+		a[rear] = ans;
+		rear++;			   //rear必須把位置讓出來 
+		return rear;
+	}
+	else{
+		a[rear] = ans;
+		rear++;
+		return rear;
+	}
+}
+
+int dequeue(int a[],int front,int num){
+	printf("%d is removed from the array\n",a[front]);
+	a[front] = 0;
+	//if(front==0){       //如果一開始只有輸入一個值，那刪掉的話，front又+1，會出問題 ，但是，這樣寫的問題是，有一個以上的值輸入時，也會把0印出來，因為我在print那是以front的質作為起始值 
+	if(num==1){
+		front = 0;        //bug fix! 修復了當num從1變0時，front的值沒有變 
+		return front;
+	}
+	else{
+		front++;
+		return front;
+	}
+}
